@@ -1,0 +1,172 @@
+The X-axis is frame number within the 320 taken in the sequence, each at 3 seconds.
+The Y-axis is inst. Magnitude.
+This is a binary WD+WD eclipsing system, so I doubt if a secondary eclipse will be seen. Usually one is a DA, 1.2M-sun, earth size, the other is a HE WD, 0.2 M-sun, much larger in radius.
+The proposal says the mid-eclipse times are:
+BJD(TDB) = 2458429.78643(7) + 0.037 041 44(1)E
+
+Nic and Andy,
+Here is what I have. We observed four eclipses for this object, UT 2/16, 2/17 (2) and 2/18. Each time series had 320 frames of 3 sec each taken at 512 X 512 pixels and in SDSS g,i. I have used only the g frames (best S/N) and assume the i frames are similar in timing, but we should check.
+I took each of the b frames (SDSS g) and produced a photometric light curve using aperture photometry. I sent you the .png files of them yesterday and attach here zooms of the eclipses. I call the 2/17 datasets “a” and “b”. I also attach the actual light curve files, 2 columns of frame number within the 320 and inst., magnitude.  2/18 was by far the best seeing and S/N night, 17 a perhaps the worst, the others were ok. I believe the eclipse is total – i.e., flat bottomed (see 18 light curve) and we are seeing variations near eclipse bottom due to simply no flux from the star being received -sky bg only. I have not binned or co-added the data in any way – which I might do if I was publishing it, but wanted full resolution here to find the mid-eclipse value.
+I also attach the fits headers (in a .docx file) for the three multi-extension fits files (fours eclipses, three files, 2/17 has 2 eclipses observed).
+The object is ZTF0220+2141 and the proposal says the mid-eclipse times are (Period ~53.28 min):
+BJD(TDB) = 2458429.78643(7) + 0.037 041 44(1)E
+
+For mid-eclipse times, I did three things:
+Eyeball estimate to get near the ball park in each light curve and to examine the data – look at your data
+I used Argelander’s method to provide a good estimate of the mid-eclipse time to make sure my #3 was accurate
+I made a Gaussian fit to each eclipse and determined the mid-eclipse time. See plot below.
+These three methods all agreed, the fitting being most accurate however.
+
+The mid-eclipse times (in frame number) are (in fractions of frames of 3 sec each) – each is about +/- 0.01-0.02 trying repeated Gaussian fits. If I were publishing, I’d phase each eclipse and put together as binned data, removing outliers, and show a binned beautiful light curve from which to do science of ingress and egress. ;-)  and then could iterate on the true mid-eclipse etc. But this work should show us how well we did or did not do.
+UT date    Mid-eclipse in fraction of frame number
+2/16     155.5221
+2/17a   141.4742
+2/17b     79.9147
+2/18       56.6787
+Thus, we will need to
+Convert our start time from JD or MJD at start exposure to BJD
+Look at the timing in the files for the frames
+Find the time at mid-eclipse for each eclipse in fractional frames
+Compare to the predicted time from ephemeris
+See how well we did ;-)
+ACT     =                 3.001195 / Accumulation cycle time
+EXPTIME =             3.000019 / Frame Exposure time in seconds
+OBSTIME =       1581920591.6140 / UTC at start of observation
+EXPENDTM=      1581921552.7768 / UTC at end of observation
+KCT     =             3.001195 / Kinetic cycle time
+MJD Start   MJD-OBS
+JD Start JD
+Frame exposure time   EXPTIME
+Accumulation cycle time   ACT
+Kinetic cycle time     KCT
+UT start   OBSTIME
+UT end    EXPENDTM
+MJD-OBS =         58896.277222 / MJD at start of obs
+JD      =        2458896.77722 / Julian Date at start of obs
+ACT     =                 3.001195 / Accumulation cycle time
+EXPTIME =             3.000019 / Frame Exposure time in seconds
+OBSTIME =       1581920591.6140 / UTC at start of observation
+EXPENDTM=      1581921552.7768 / UTC at end of observation
+KCT     =             3.001195 / Kinetic cycle time
+RA      = '02:20:08.596'       / Telescope RA
+DEC     = '+21:41:55.72'       / Telescope DEC
+The timestamps in N20200216A0230b.fits are fairly consistent with starting at ~6:19:03 UTC and ending at ~6:35:03 UTC:
+OBSTIME =      1581833942.5149 / UTC at start of obs = 2020-02-16 06:19:02.5149 UTC
+Timing table [0] - 3.0011s = 1581833942.848955 =       2020-02-16 06:19:02.848955 UTC
+EXPOSURE=    960.006400 / Total Exposure Time (16 min)
+MJD-OBS =         58895.274340 / MJD at END of obs =   2020-02-16 06:35:02.976 UTC
+UTC     = '06:35:03.0'         / UTC at end of obs =   2020-02-16 06:35:03.0 UTC
+EXPENDTM=      1581834903.2489 / UTC at end of obs =   2020-02-16 06:35:03.2489 UTC
+SPKLEDAT= 'Feb 15 20:35:03'   / SPECKLENFO-timestamp = 2020-02-16 06:35:03.0 UTC
+Timing table [N-1] + 3.0011s = 1581834903.2356 =       2020-02-16 06:35:03.235600 UTC
+File creation time: 2020-02-15 20:35:04.000 -1000 =    2020-02-16 06:35:04.0 UTC
+Note that I have assumed that the timing table values are the *end* of each exposure and extrapolated the starting and ending times.
+The only FITS header keyword that doesn't match is:
+TIMEOBS = '05:28:30'           / from speckle.scope.timeobs
+If we observed eclipse 12580 at BJD_TDB  2458895.76776478,
+I think that corresponds to approximately 2020-02-16 06:26:45 UTC,
+which would have been ~7m42s after the start of the 16-minute observation, or exposure ~154 of 320.
+Does this match what you found for the center of this eclipse?
+If I do the calculation a bit more carefully it looks like:
+eclipse center = 2020-02-16 06:26:46.619 UTC
+Using the timing table:
+observation start = 2020-02-16 06:19:02.849 UTC
+exposure number =  (6:26:46.619 - 6:19:02.849) / 3.0011 = 154.533
+This looks suspiciously off by one exposure (2.964s).
+Working backward from the measured eclipse time:
+observation start = 6:26:46.619 - 155.5211 * 3.0011s = 06:18:59.885
+-Andy
+
+Howell, Steve B. (ARC-SSA)
+5:07 PM (37 minutes ago)
+to Andrew, me
+https://www.timestamp-converter.com
+OK, using this web-site (most do not give fractional seconds and I’d suggest we calc. this ourselves)
+I get for the four eclipses 2/16, 2/17a, 2/17b, 2/18
+UTC at start of observation      Date Time
+1581833942.5149                         2020-02-16 06:19:02.514
+1581917199.5959                         2020-02-17 05:26:39.595
+1581920591.6140                        2020-02-17 06:23:11.614
+1582003876.5604                        2020-02-18 05:31:16.560
+These start times and the ephemeris etc. translate into the following start times in BJD
+2458895.762393612
+2458896.725925104
+2458896.765180723
+2458897.729035291
+Yielding, using the ephemeris and period of the EB, the following frames in the sequences
+154.064363
+140.992864
+77.249912
+54.877535
+I found mid-eclipse values of
+155.5221
+141.4742
+79.9147
+56.6787
+So, we are ahead in all eclipses by
+1.457737
+0.481336
+2.664788
+1.801165
+Thus, I conclude
+1) We are not just off by a frame in count
+2) Are we using the correct time as a start time (UTC at start of observation) and how accurate is that time? (note here, my UNIX seconds to date is not super accurate)
+3) Are all the differences, up to nearly 8 seconds, simply an ephemeris issue?
+-steve
+
+I only did the blue images as they had good S/N.
+The file names are:
+N20200216A0230b.fits    N20200217A0319b.fits    N20200217A0320b.fits    N20200218A0536b.fits
+Yes, I’d think that if the ephemeris is off, we see a constant and/or increasing error, (might not change much in a few days). Good point.
+So not sure why they are not consistently off in some way.
+-steve
+
+Dear Nic and Andy,
+
+Let me walk through an example for the 2/16 (first) eclipse and see if this makes sense
+Using the UTC at start of obs = 2020-02-16 06:19:02.5149 UTC, I converted this to BJD using the website calculator
+http://astroutils.astronomy.ohio-state.edu/time/utc2bjd.html
+with the observatory set to CFHT (they did not seem to have Keck or Gemini of Mauna Kea but CFHT is close enough, and the RA DEC of the star
+The start time converted to 2458895.762393612 BJD
+Taking the eclipse ephemeris (in BJD) and its difference from the star time, I get
+2458895.762393612 – 2458429.78643 = 465.9759636 (BJD) days that have past.
+Using the binary period of 0.03704144 days, the start of our observation occurred at 12579.85552 cycles of the binary. This means that we need to go 1-0.85552 more cycles to get to phase 0.0 (the eclipse) or 0.14448 in phase. This gives 0.14448 * 0.03704144 = 0.005351747 days of time or 462.39 sec.
+Taking the KCT value (I assume this is what to use as it is the cycle time) of 3.001195 sec / frame
+Then 462.3909408 sec / 3.001195 sec/frame =   frame number 154.0689428
+I find the mid-eclipse centroid in my fitting of 155.5221
+So , if we repeat this for the other three eclipses, and fine that each is not quite at the predicted time, I think we can believe that errors in the EB ephemeris (start and period) are the issue and that we are not just off by 1 frame somehow.  If we always get the same “delta” from the prediction to the measured value) then I think we have some frame issue.
+
+Hi Steve and Nic,
+The timestamps in N20200216A0230b.fits are fairly consistent with starting at ~6:19:03 UTC and ending at ~6:35:03 UTC:
+
+OBSTIME =      1581833942.5149 / UTC at start of obs = 2020-02-16 06:19:02.5149 UTC
+Timing table [0] - 3.0011s = 1581833942.848955 =       2020-02-16 06:19:02.848955 UTC
+EXPOSURE=    960.006400 / Total Exposure Time (16 min)
+MJD-OBS =         58895.274340 / MJD at END of obs =   2020-02-16 06:35:02.976 UTC
+UTC     = '06:35:03.0'         / UTC at end of obs =   2020-02-16 06:35:03.0 UTC
+EXPENDTM=      1581834903.2489 / UTC at end of obs =   2020-02-16 06:35:03.2489 UTC
+SPKLEDAT= 'Feb 15 20:35:03'   / SPECKLENFO-timestamp = 2020-02-16 06:35:03.0 UTC
+Timing table [N-1] + 3.0011s = 1581834903.2356 =       2020-02-16 06:35:03.235600 UTC
+File creation time: 2020-02-15 20:35:04.000 -1000 =    2020-02-16 06:35:04.0 UTC
+
+Note that I have assumed that the timing table values are the *end* of each exposure and extrapolated the starting and ending times.
+
+The only FITS header keyword that doesn't match is:
+TIMEOBS = '05:28:30'           / from speckle.scope.timeobs
+
+If we observed eclipse 12580 at BJD_TDB  2458895.76776478,
+I think that corresponds to approximately 2020-02-16 06:26:45 UTC,
+which would have been ~7m42s after the start of the 16-minute observation, or exposure ~154 of 320.
+Does this match what you found for the center of this eclipse?
+
+Hi Steve,
+
+I went about it a different way and used the timing table starting value, and I confirm your numbers to within a second or so:
+File	Observation Start(UTC)	Predicted Eclipse Center(UTC)	Predicted Eclipse Center(frames)	Measured Eclips Center(frames)	Error(frames)	Error (seconds)
+N20200216A0230b	2020-02-16 06:19:02.848850	2020-02-16 06:26:46.619248	154.5287	155.5221	0.9934	2.981
+N20200217A0319b	2020-02-17 05:26:40.202030	2020-02-17 05:33:44.465758	141.3649	141.4742	0.1093	0.328
+N20200217A0320b	2020-02-17 06:23:12.224990	2020-02-17 06:27:05.154613	77.6124	79.9147	2.3023	6.910
+N20200218A0536b	2020-02-18 05:31:17.193140	2020-02-18 05:34:02.957108	55.2328	56.6787	1.4459	4.339
+Cheers,
+-Andy
+ 
