@@ -70,10 +70,10 @@ telescopedict = {
 }
 telescope = telescopedict[hdu_list[0].header['OBSERVAT']]   
 times = Time(mjdtime, format='mjd', scale='utc', location=coord.EarthLocation.of_site(telescope))  
-ltt_bary = times.light_travel_time(obj)  
+ltt_bary = times.light_travel_time(obj, ephemeris='jpl')  
 
 np.savetxt(path+name+'_ltt_barytiming.txt', ltt_bary, delimiter=" ", fmt='%s') 
-bjdtime=mjdtime+ltt_bary
-np.savetxt(path+name+'bjdtiming.txt', bjdtime, delimiter=" ", fmt='%s') 
+bjdtime=times.tdb+ltt_bary
+np.savetxt(path+name+'bjdtiming.txt', bjdtime, delimiter=" ", fmt='%s') #bjd_tdb
 
 plt.show()
